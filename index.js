@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import helmet from 'helmet';
-import connectDB from './config/connectDB';
+import connectDB from './config/connectDB.js';
 dotenv.config();
 
 const app = express();
@@ -27,6 +27,9 @@ app.get("/", (req, res) => {
     })
 });
 
-app.listen(process.env.PORT, () => {
-    console.log(`Server is running on port ${process.env.PORT}`);
+connectDB().then(() => {
+    app.listen(process.env.PORT, () => {
+        console.log(`Server is running on port ${process.env.PORT}`);
 });
+});
+
