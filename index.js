@@ -18,7 +18,8 @@ const app = express()
 
 const allowedOrigins = [
     "http://localhost:5173",  // If your frontend is running locally
-    "https://binkey-it.vercel.app" // Your deployed frontend
+    "https://binkey-it.vercel.app" ,
+"https://phenomenal-buttercream-cb512c.netlify.app"// Your deployed frontend
 ];
 
 app.use(cors({
