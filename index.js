@@ -18,7 +18,8 @@ import orderRouter from './route/order.route.js'
 const app = express()
 
 app.use(cors({
-    origin: ["https://binkey-it-frontend.vercel.app", "http://localhost:5173"],
+    origin: "*",
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true
 }));
 
