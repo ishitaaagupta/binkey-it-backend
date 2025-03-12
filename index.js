@@ -3,7 +3,6 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 dotenv.config()
 import cookieParser from 'cookie-parser'
-import morgan from 'morgan'
 import helmet from 'helmet'
 import connectDB from './config/connectDB.js'
 import userRouter from './route/user.route.js'
@@ -23,15 +22,12 @@ const allowedOrigins = [
 ];
 
 app.use(cors({
-    origin: allowedOrigins,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true
-}));
+    credentials : true,
+    origin : allowedOrigins
+}))
 
 app.use(express.json())
 app.use(cookieParser())
-app.use(morgan())
 app.use(helmet({
     crossOriginResourcePolicy : false
 }))
