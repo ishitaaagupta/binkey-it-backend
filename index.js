@@ -19,9 +19,9 @@ const app = express()
 
 app.use(cors({
     origin: ["https://binkey-it-frontend.vercel.app", "http://localhost:5173"],
-    methods: ["POST", "GET", "DELETE", "PUT"],
     credentials: true
 }));
+
 app.use(express.json())
 app.use(cookieParser())
 app.use(morgan())
