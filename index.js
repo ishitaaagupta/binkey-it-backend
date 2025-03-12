@@ -16,10 +16,12 @@ import addressRouter from './route/address.route.js'
 import orderRouter from './route/order.route.js'
 
 const app = express()
+
 app.use(cors({
-    credentials : true,
-    origin : process.env.FRONTEND_URL
-}))
+    origin: ["https://binkey-it-frontend.vercel.app", "http://localhost:5173"],
+    methods: ["POST", "GET", "DELETE", "PUT"],
+    credentials: true
+}));
 app.use(express.json())
 app.use(cookieParser())
 app.use(morgan())
@@ -27,7 +29,7 @@ app.use(helmet({
     crossOriginResourcePolicy : false
 }))
 
-const PORT = process.env.PORT 
+const PORT = 3000 
 
 app.get("/",(request,response)=>{
     ///server to client
