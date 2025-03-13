@@ -16,15 +16,12 @@ import orderRouter from './route/order.route.js'
 
 const app = express()
 
-const allowedOrigins = [
-    "http://localhost:5173",  // If your frontend is running locally
-    "https://binkey-it.vercel.app" // Your deployed frontend
-];
+
 
 app.use(cors({
-    credentials : true,
-    origin : allowedOrigins
-}))
+    origin: "*"
+}));
+
 
 app.use(express.json())
 app.use(cookieParser())
