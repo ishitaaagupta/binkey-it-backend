@@ -287,7 +287,7 @@ export async function forgotPasswordController(request,response) {
 console.log("email",email)
         if(!user){
             return response.status(400).json({
-                message : "Email not available",
+                message : "User not registered",
                 error : true,
                 success : false
             })
@@ -311,7 +311,7 @@ console.log("email",email)
         })
 
         return response.json({
-            message : "check your email",
+            message : "Please check your mail",
             error : false,
             success : true
         })
