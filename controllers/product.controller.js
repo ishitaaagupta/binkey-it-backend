@@ -265,47 +265,97 @@ export const deleteProductDetails = async(request,response)=>{
 }
 
 //search product
-export const searchProduct = async(request,response)=>{
+// export const searchProduct = async(request,response)=>{
+//     try {
+//         let { search, page , limit } = request.body 
+
+//         if(!page){
+//             page = 1
+//         }
+//         if(!limit){
+//             limit  = 10
+//         }
+
+//         const query = search ? {
+//             $text : {
+//                 $search : search
+//             }
+//         } : {}
+
+//         const skip = ( page - 1) * limit
+
+//         const [data,dataCount] = await Promise.all([
+//             ProductModel.find(query).sort({ createdAt  : -1 }).skip(skip).limit(limit).populate('category subCategory'),
+//             ProductModel.countDocuments(query)
+//         ])
+
+//         return response.json({
+//             message : "Product data",
+//             error : false,
+//             success : true,
+//             data : data,
+//             totalCount :dataCount,
+//             totalPage : Math.ceil(dataCount/limit),
+//             page : page,
+//             limit : limit 
+//         })
+
+
+//     } catch (error) {
+//         return response.status(500).json({
+//             message : error.message || error,
+//             error : true,
+//             success : false
+//         })
+//     }
+// }
+
+export const searchProduct = async (request, response) => {
     try {
-        let { search, page , limit } = request.body 
+        let { search, page, limit } = request.body;
 
-        if(!page){
-            page = 1
-        }
-        if(!limit){
-            limit  = 10
-        }
+        page = page ? parseInt(page) : 1;
+        limit = limit ? parseInt(limit) : 10;
 
-        const query = search ? {
-            $text : {
-                $search : search
-            }
-        } : {}
+        // ✅ Ensure Text Index Exists
+        await ProductModel.syncIndexes();
 
-        const skip = ( page - 1) * limit
+        // ✅ Construct the Query
+        const query = search
+            ? {
+                  $text: {
+                      $search: search,
+                  },
+              }
+            : {};
 
-        const [data,dataCount] = await Promise.all([
-            ProductModel.find(query).sort({ createdAt  : -1 }).skip(skip).limit(limit).populate('category subCategory'),
-            ProductModel.countDocuments(query)
-        ])
+        const skip = (page - 1) * limit;
+
+        // ✅ Fetch Products & Count
+        const [data, dataCount] = await Promise.all([
+            ProductModel.find(query)
+                .sort({ createdAt: -1 })
+                .skip(skip)
+                .limit(limit)
+                .populate("category subCategory"),
+            ProductModel.countDocuments(query),
+        ]);
 
         return response.json({
-            message : "Product data",
-            error : false,
-            success : true,
-            data : data,
-            totalCount :dataCount,
-            totalPage : Math.ceil(dataCount/limit),
-            page : page,
-            limit : limit 
-        })
-
-
+            message: "Product data",
+            error: false,
+            success: true,
+            data: data,
+            totalCount: dataCount,
+            totalPage: Math.ceil(dataCount / limit),
+            page: page,
+            limit: limit,
+        });
     } catch (error) {
         return response.status(500).json({
-            message : error.message || error,
-            error : true,
-            success : false
-        })
+            message: error.message || "Internal Server Error",
+            error: true,
+            success: false,
+        });
     }
-}
+};

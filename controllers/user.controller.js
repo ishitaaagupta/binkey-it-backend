@@ -53,7 +53,7 @@ export async function registerUserController(request,response){
                 url : VerifyEmailUrl
             })
         })
-
+console.log({verifyEmail})
         return response.json({
             message : "User register successfully",
             error : false,
@@ -284,7 +284,7 @@ export async function forgotPasswordController(request,response) {
         const { email } = request.body 
 
         const user = await UserModel.findOne({ email })
-
+console.log("email",email)
         if(!user){
             return response.status(400).json({
                 message : "Email not available",
@@ -329,7 +329,7 @@ export async function forgotPasswordController(request,response) {
 export async function verifyForgotPasswordOtp(request,response){
     try {
         const { email , otp }  = request.body
-
+console.log({email,otp})
         if(!email || !otp){
             return response.status(400).json({
                 message : "Provide required field email, otp.",

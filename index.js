@@ -13,20 +13,22 @@ import productRouter from './route/product.route.js'
 import cartRouter from './route/cart.route.js'
 import addressRouter from './route/address.route.js'
 import orderRouter from './route/order.route.js'
+import editorRouter from './route/editor.route.js'
 
 const app = express()
 
 
 
 app.use(cors({
-    origin: "*"
+    origin: process.env.FRONTEND_URL, // Fix: Use the actual env variable
+    credentials: true
 }));
 
 
 app.use(express.json())
 app.use(cookieParser())
 app.use(helmet({
-    crossOriginResourcePolicy : false
+    crossOriginResourcePolicy : { policy: "cross-origin" }
 }))
 
 const PORT = 3000 
@@ -46,6 +48,7 @@ app.use("/api/product",productRouter)
 app.use("/api/cart",cartRouter)
 app.use("/api/address",addressRouter)
 app.use('/api/order',orderRouter)
+app.use("/api/editor", editorRouter); // CKEditor API
 
 connectDB().then(()=>{
     app.listen(PORT,()=>{

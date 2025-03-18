@@ -53,13 +53,12 @@ const productSchema = new mongoose.Schema({
 })
 
 //create a text index
-// productSchema.index({
-//     name  : "text",
-//     description : 'text'
-// },{
-//     name : 10,
-//     description : 5
-// })
+
+
+productSchema.index({
+    name: "text",
+    description: "text",
+});
 
 
 const ProductModel = mongoose.model('product',productSchema)
